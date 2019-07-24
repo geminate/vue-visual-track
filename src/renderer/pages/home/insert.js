@@ -2,8 +2,10 @@
 var selectPlugin = {
 
   startSelect: function () {
+    document.body.style.cursor = 'crosshair'
     this.addEvent(document.body, 'mouseover', this.mouseOverHandler)
     this.addEvent(document.body, 'mouseout', this.mouseOutHandler)
+    this.addEvent(document.body, 'onkeypress', this.keyPressHandler)
   },
 
   stopSelect: function () {
@@ -22,8 +24,9 @@ var selectPlugin = {
     e.target.style.backgroundColor = ''
   },
 
-  mouseDownHandler: function (e) {
+  keyPressHandler: function (e) {
     e.stopPropagation()
+    alert(e)
   },
 
   addEvent: function (element, eventName, handler) {
@@ -38,6 +41,7 @@ var selectPlugin = {
 var selectPluginText = `var selectPlugin = {
 
   startSelect: function () {
+    document.body.style.cursor = 'crosshair'
     this.addEvent(document.body, 'mouseover', this.mouseOverHandler)
     this.addEvent(document.body, 'mouseout', this.mouseOutHandler)
   },

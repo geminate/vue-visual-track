@@ -3,14 +3,14 @@
 process.env.BABEL_ENV = 'renderer'
 
 const path = require('path')
-const { dependencies } = require('../package.json')
+const {dependencies} = require('../package.json')
 const webpack = require('webpack')
 
 const BabiliWebpackPlugin = require('babili-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
+const {VueLoaderPlugin} = require('vue-loader')
 
 /**
  * List of node_modules to include in webpack bundle
