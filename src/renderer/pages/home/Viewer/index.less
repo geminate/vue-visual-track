@@ -1,0 +1,30 @@
+.viewer {
+    box-shadow: 0 0 40px 2px gray;
+    box-sizing: content-box;
+    flex: 0 0 414px;
+
+    .header {
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        border-bottom: 1px solid #EFEFEF;
+        display: flex;
+
+        h1 {
+            flex: 1 1 auto;
+        }
+
+        .back, .forward {
+            flex: 0 0 60px;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    }
+
+    .webview {
+        width: 414px;
+        height: 736px;
+        display: inline-flex;
+    }
+}
