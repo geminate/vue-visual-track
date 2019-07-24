@@ -3,19 +3,72 @@
     height: 100vh;
     background: white;
 
-    .webview-container {
-        margin: 40px auto;
-        width: 414px;
-        height: 736px;
+    .url-input {
 
+        /deep/ .el-input-group__prepend, /deep/ .el-input__inner {
+            border-radius: 0;
+        }
+    }
+
+    .page-container {
+        display: flex;
+        padding: 40px;
+    }
+
+    .webview-container {
         box-shadow: 0 0 40px 2px gray;
         box-sizing: content-box;
+        flex: 0 0 414px;
+
+        .webview-header {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border-bottom: 1px solid #EFEFEF;
+            display: flex;
+
+            h1 {
+                flex: 1 1 auto;
+            }
+
+            .back, .forward {
+                flex: 0 0 60px;
+                font-size: 22px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
 
         .webview {
             width: 414px;
             height: 736px;
             display: inline-flex;
-
         }
+    }
+
+    .btn-container {
+        flex: 0 0 100px;
+
+        i {
+            display: block;
+            border: 1.5px solid #BFBFBF;
+            width: 30px;
+            height: 30px;
+            padding-left: 10px;
+            padding-top: 5px;
+            color: #bfbfbf;
+            border-radius: 5px;
+            margin: 0 auto;
+
+            &.active {
+                border-color: #7e9cff;
+                color: #7e9cff;
+            }
+        }
+    }
+
+    .event-container {
+        border: 1px solid #BFBFBF;
+        flex: 0 0 414px;
     }
 }

@@ -1,28 +1,19 @@
-'use strict'
-
-import {app, BrowserWindow} from 'electron'
-
-/**
- * Set `__static` path to static files in production
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
- */
-if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
-}
+import {app, BrowserWindow, Menu} from 'electron'
 
 let mainWindow
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
-function createWindow () {
-  /**
-   * Initial window options
-   */
+// 创建主窗体
+const createWindow = () => {
+  Menu.setApplicationMenu(null)
   mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
+    width: 1008,
+    height: 950,
+    minWidth: 1008,
+    minHeight: 950,
+    maxWidth: 1008,
+    maxHeight: 950,
+    useContentSize: true
   })
 
   mainWindow.loadURL(winURL)
@@ -32,7 +23,9 @@ function createWindow () {
   })
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow()
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -45,23 +38,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-/**
- * Auto Updater
- *
- * Uncomment the following code below and install `electron-updater` to
- * support auto updating. Code Signing with a valid certificate is required.
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
- */
-
-/*
-import { autoUpdater } from 'electron-updater'
-
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-})
- */
