@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="a">
+  <ul>
+    <li onclick="test(event)">454</li>
+    <li onclick="test(event)">1234</li>
+    <li>453</li>
+  </ul>
+  <ul>
+    <li onclick="test(event)">453</li>
+    <li>45345</li>
+    <li>4</li>
+  </ul>
+</div>
+<div class="b" onclick="test(event)">
+  453
+</div>
+<script>console.log(12)
+
+function test (event) {
+  let node = event.target
+  let path
+  while (node) {
+
+    let name = node.localName
+    if (!name) break
+    name = name.toLowerCase()
+    const parent = node.parentElement
+    let reChildrenNode = []
+
+    const childNodes = (parent && parent.childNodes) || []
+    for (let i = 0; i < childNodes.length; i++) {
+      if (childNodes[i].nodeName.toLowerCase() === name && !/\s/.test(childNodes.nodeValue)) {
+        reChildrenNode.push(childNodes[i])
+      }
+    }
+    if (reChildrenNode.length > 1) {
+      name += ':nth-of-type(' + Number(reChildrenNode.indexOf(node)) + 1 + ')'
+    }
+
+    path = name + (path ? '>' + path : '')
+    node = parent
+  }
+  console.log(path)
+  return path
+}
+</script>
+</body>
+</html>

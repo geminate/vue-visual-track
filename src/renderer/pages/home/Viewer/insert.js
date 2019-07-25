@@ -1,4 +1,9 @@
 // eslint-disable-next-line no-unused-vars
+const {ipcRenderer} = require('electron')
+
+let selectDom = null
+
+// eslint-disable-next-line no-unused-vars
 var selectPlugin = {
 
   startSelect: function () {
@@ -16,7 +21,7 @@ var selectPlugin = {
   mouseOverHandler: function (e) {
     e.stopPropagation()
     e.target.style.backgroundColor = 'rgb(160,191,232)'
-    console.log(e.target)
+    selectDom = e.target
   },
 
   mouseOutHandler: function (e) {
@@ -30,16 +35,52 @@ var selectPlugin = {
 
   removeEvent: function (element, eventName, handler) {
     element.removeEventListener(eventName, handler, false)
+  },
+
+  select: function () {
+    const selector = this.getUniqueSelect(selectDom)
+    ipcRenderer.sendToHost(selector)
+  },
+
+  getUniqueSelect: function (node) {
+    let path
+    while (node) {
+      let name = node.localName
+      if (!name) break
+      name = name.toLowerCase()
+      const parent = node.parentElement
+      let reChildrenNode = []
+
+      const childNodes = (parent && parent.childNodes) || []
+      for (let i = 0; i < childNodes.length; i++) {
+        if (childNodes[i].nodeName.toLowerCase() === name && !/\s/.test(childNodes.nodeValue)) {
+          reChildrenNode.push(childNodes[i])
+        }
+      }
+      if (reChildrenNode.length > 1) {
+        const index = reChildrenNode.indexOf(node) + 1
+        name += ':nth-of-type(' + index + ')'
+      }
+
+      path = name + (path ? '>' + path : '')
+      node = parent
+    }
+    return path
   }
 }
 
-var selectPluginText = `var selectPlugin = {
+var selectPluginText = `// eslint-disable-next-line no-unused-vars
+const {ipcRenderer} = require('electron')
+
+let selectDom = null
+
+// eslint-disable-next-line no-unused-vars
+var selectPlugin = {
 
   startSelect: function () {
     document.body.style.cursor = 'crosshair'
     this.addEvent(document.body, 'mouseover', this.mouseOverHandler)
     this.addEvent(document.body, 'mouseout', this.mouseOutHandler)
-    this.addEvent(document.body, 'onkeypress', this.keyPressHandler)
   },
 
   stopSelect: function () {
@@ -51,17 +92,12 @@ var selectPluginText = `var selectPlugin = {
   mouseOverHandler: function (e) {
     e.stopPropagation()
     e.target.style.backgroundColor = 'rgb(160,191,232)'
-    console.log(e.target)
+    selectDom = e.target
   },
 
   mouseOutHandler: function (e) {
     e.stopPropagation()
     e.target.style.backgroundColor = ''
-  },
-
-  keyPressHandler: function (e) {
-    e.stopPropagation()
-    alert(e)
   },
 
   addEvent: function (element, eventName, handler) {
@@ -70,7 +106,38 @@ var selectPluginText = `var selectPlugin = {
 
   removeEvent: function (element, eventName, handler) {
     element.removeEventListener(eventName, handler, false)
+  },
+
+  select: function () {
+    const selector = this.getUniqueSelect(selectDom)
+    ipcRenderer.sendToHost(selector)
+  },
+
+  getUniqueSelect: function (node) {
+    let path
+    while (node) {
+      let name = node.localName
+      if (!name) break
+      name = name.toLowerCase()
+      const parent = node.parentElement
+      let reChildrenNode = []
+
+      const childNodes = (parent && parent.childNodes) || []
+      for (let i = 0; i < childNodes.length; i++) {
+        if (childNodes[i].nodeName.toLowerCase() === name && !/\\s/.test(childNodes.nodeValue)) {
+          reChildrenNode.push(childNodes[i])
+        }
+      }
+      if (reChildrenNode.length > 1) {
+        const index = reChildrenNode.indexOf(node) + 1
+        name += ':nth-of-type(' + index + ')'
+      }
+
+      path = name + (path ? '>' + path : '')
+      node = parent
+    }
+    return path
   }
-};`
+}`
 
 export default selectPluginText

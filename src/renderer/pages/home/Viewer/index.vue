@@ -11,16 +11,20 @@
 
     <!-- 浏览器内容 -->
     <webview ref="webview"
+             nodeintegration
              class="webview"
              :src="webviewUrl"
              @dom-ready="onDomReady"
-             @did-navigate="onDidNavigate" @console-message="onConsoleMessage">
+             @did-navigate="onDidNavigate"
+             @console-message="onConsoleMessage" @ipc-message="onIpcMessage">
     </webview>
   </div>
 </template>
 
 <script>
   import insertJs from './insert'
+  import electron from 'electron'
+  import IPC from '@/../IPC.js'
 
   export default {
     name: 'Viewer',
@@ -32,6 +36,7 @@
       }
     },
     watch: {
+
       selecting () {
         let insert = ''
         if (this.selecting) {
@@ -43,6 +48,19 @@
       }
     },
     methods: {
+
+      // 初始化
+      init () {
+        electron.ipcRenderer.on(IPC.PRESS_CTRL_Q, (e) => { // 主进程监控到按键按下后发送至渲染进程，渲染进程再发送到 webview 内
+          this.$refs.webview.executeJavaScript('selectPlugin.select()')
+        })
+      },
+
+      onIpcMessage ({channel}) {
+        console.log(channel)
+      },
+
+      // Webview 加载完成回调
       onDomReady () {
         this.$refs.webview.executeJavaScript(insertJs)
         const webContents = this.$refs.webview.getWebContents()
@@ -54,24 +72,30 @@
         })
       },
 
+      // Webview 页面跳转完成回调
       onDidNavigate ({url}) {
         this.$emit('webviewUrlChange', url)
         this.canGoBack = this.$refs.webview.canGoBack()
         this.canGoForward = this.$refs.webview.canGoForward()
-        console.log(url)
       },
 
+      // Webview 控制台收到消息回调
       onConsoleMessage ({message}) {
         console.log(message)
       },
 
+      // Webview 前进
       goForward () {
         this.$refs.webview.goForward()
       },
 
+      // Webview 后退
       goBack () {
         this.$refs.webview.goBack()
       }
+    },
+    mounted () {
+      this.init()
     }
   }
 </script>

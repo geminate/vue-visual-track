@@ -1,4 +1,5 @@
 import {app, BrowserWindow, Menu, globalShortcut} from 'electron'
+import IPC from '../IPC.js'
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
@@ -26,7 +27,7 @@ const createWindow = () => {
 app.on('ready', () => {
   createWindow()
   globalShortcut.register('CommandOrControl+Q', () => {
-    console.log('CommandOrControl+Q is pressed')
+    mainWindow.webContents.send(IPC.PRESS_CTRL_Q)
   })
 })
 
