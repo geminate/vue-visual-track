@@ -14,8 +14,8 @@
 
       <!-- 右侧列表 -->
       <event-list></event-list>
-    </div>
 
+    </div>
   </div>
 </template>
 
