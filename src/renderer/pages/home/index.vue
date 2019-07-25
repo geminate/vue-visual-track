@@ -7,13 +7,14 @@
     <div class="page-container">
 
       <!-- Webview -->
-      <viewer :webviewUrl="webviewUrl" @webviewUrlChange="webviewUrlChange" :selecting="selecting"></viewer>
+      <viewer :webviewUrl="webviewUrl" @webviewUrlChange="webviewUrlChange" @addEvent="addEvent"
+              :selecting="selecting"></viewer>
 
       <!-- 中部按钮组 -->
       <btn-container @toggleSelect="toggleSelect"></btn-container>
 
       <!-- 右侧列表 -->
-      <event-list></event-list>
+      <event-list ref="eventList"></event-list>
 
     </div>
   </div>
@@ -49,6 +50,10 @@
       // 切换 Dom 选择
       toggleSelect (selecting) {
         this.selecting = selecting
+      },
+
+      addEvent (data) {
+        this.$refs.eventList.showModal(data)
       }
 
     }

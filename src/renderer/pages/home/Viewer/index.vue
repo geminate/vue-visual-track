@@ -61,7 +61,13 @@
       },
 
       onIpcMessage ({channel}) {
-        console.log(channel)
+        const url = this.$refs.webview.getURL()
+        const obj = {
+          level: '1',
+          page: url,
+          selector: channel
+        }
+        this.$emit('addEvent', obj)
       },
 
       // Webview 加载完成回调
