@@ -1,4 +1,4 @@
-# dom-visual-select
+# visual-tracking
 
 > An electron-vue project
 

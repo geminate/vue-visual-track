@@ -1,5 +1,5 @@
 {
-  "name": "dom-visual-select",
+  "name": "visual-tracking",
   "version": "0.0.1",
   "author": "liuhuihao <1061036802@qq.com>",
   "description": "An electron-vue project",
@@ -19,7 +19,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "dom-visual-select",
+    "productName": "visual-tracking",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"

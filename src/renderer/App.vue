@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'dom-visual-select'
+    name: 'visual-tracking'
   }
 </script>
 
