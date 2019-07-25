@@ -8,17 +8,24 @@
         line-height: 50px;
         text-align: center;
         border-bottom: 1px solid #EFEFEF;
-        display: flex;
+        position: relative;
 
-        h1 {
-            flex: 1 1 auto;
-        }
 
         .back, .forward {
-            flex: 0 0 60px;
+            position: absolute;
             font-size: 22px;
             font-weight: bold;
             cursor: pointer;
+        }
+
+        .back {
+            left: 10px;
+            top: 0;
+        }
+
+        .forward {
+            right: 10px;
+            top: 0;
         }
     }
 

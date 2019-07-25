@@ -30,7 +30,7 @@
     components: {TopBar, Viewer, BtnContainer, EventList},
     data () {
       return {
-        webviewUrl: '', // webview 页面地址
+        webviewUrl: 'https://github.com/', // webview 页面地址
         selecting: false // 是否正在选取元素
       }
     },

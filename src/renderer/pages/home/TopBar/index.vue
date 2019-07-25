@@ -13,7 +13,7 @@
     name: 'TopBar',
     data () {
       return {
-        url: 'https://www.github.com/' // 输入框中的地址
+        url: 'https://github.com/' // 输入框中的地址
       }
     },
     methods: {
@@ -26,11 +26,7 @@
 
       changeUrl (url) {
         this.url = url
-        this.goUrl()
       }
-    },
-    mounted () {
-      this.goUrl()
     }
   }
 </script>

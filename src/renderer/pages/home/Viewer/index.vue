@@ -1,13 +1,21 @@
 <!-- Webview -->
 <template>
   <div class="viewer">
+
+    <!-- 浏览器标题栏 -->
     <div class="header">
-      <div class="back"><</div>
+      <div class="back" v-if="canGoBack" @click="goBack"><</div>
       <h1>TITLE</h1>
-      <div class="forward">></div>
+      <div class="forward" v-if="canGoForward" @click="goForward">></div>
     </div>
-    <webview ref="webview" class="webview" :src="webviewUrl" @dom-ready="onDomReady"
-             @will-navigate="onWillNavigate"></webview>
+
+    <!-- 浏览器内容 -->
+    <webview ref="webview"
+             class="webview"
+             :src="webviewUrl"
+             @dom-ready="onDomReady"
+             @did-navigate="onDidNavigate">
+    </webview>
   </div>
 </template>
 
@@ -18,7 +26,10 @@
     name: 'Viewer',
     props: ['webviewUrl', 'selecting'],
     data () {
-      return {}
+      return {
+        canGoBack: false,
+        canGoForward: false
+      }
     },
     watch: {
       selecting () {
@@ -43,8 +54,19 @@
         })
       },
 
-      onWillNavigate ({url}) {
+      onDidNavigate ({url}) {
         this.$emit('webviewUrlChange', url)
+        this.canGoBack = this.$refs.webview.canGoBack()
+        this.canGoForward = this.$refs.webview.canGoForward()
+        console.log(url)
+      },
+
+      goForward () {
+        this.$refs.webview.goForward()
+      },
+
+      goBack () {
+        this.$refs.webview.goBack()
       }
     }
   }
