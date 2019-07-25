@@ -5,7 +5,7 @@
     <!-- 浏览器标题栏 -->
     <div class="header">
       <div class="back" v-if="canGoBack" @click="goBack"><</div>
-      <h1>TITLE</h1>
+      <h1>{{title}}</h1>
       <div class="forward" v-if="canGoForward" @click="goForward">></div>
     </div>
 
@@ -16,7 +16,10 @@
              :src="webviewUrl"
              @dom-ready="onDomReady"
              @did-navigate="onDidNavigate"
-             @console-message="onConsoleMessage" @ipc-message="onIpcMessage">
+             @console-message="onConsoleMessage"
+             @ipc-message="onIpcMessage"
+             @page-title-updated="onPageTitleUpdate"
+    >
     </webview>
   </div>
 </template>
@@ -32,7 +35,8 @@
     data () {
       return {
         canGoBack: false,
-        canGoForward: false
+        canGoForward: false,
+        title: ''
       }
     },
     watch: {
@@ -82,6 +86,10 @@
       // Webview 控制台收到消息回调
       onConsoleMessage ({message}) {
         console.log(message)
+      },
+
+      onPageTitleUpdate () {
+        this.title = this.$refs.webview.getTitle()
       },
 
       // Webview 前进
