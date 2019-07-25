@@ -1,6 +1,4 @@
-// eslint-disable-next-line no-unused-vars
 const {ipcRenderer} = require('electron')
-
 let selectDom = null
 
 // eslint-disable-next-line no-unused-vars
@@ -46,32 +44,29 @@ var selectPlugin = {
     let path
     while (node) {
       let name = node.localName
-      if (!name) break
-      name = name.toLowerCase()
-      const parent = node.parentElement
-      let reChildrenNode = []
-
-      const childNodes = (parent && parent.childNodes) || []
-      for (let i = 0; i < childNodes.length; i++) {
-        if (childNodes[i].nodeName.toLowerCase() === name && !/\s/.test(childNodes.nodeValue)) {
-          reChildrenNode.push(childNodes[i])
+      if (name) {
+        name = name.toLowerCase()
+        const parent = node.parentElement
+        let reChildrenNode = []
+        const childNodes = (parent && parent.childNodes) || []
+        for (let i = 0; i < childNodes.length; i++) {
+          if (childNodes[i].nodeName.toLowerCase() === name && !/\s/.test(childNodes.nodeValue)) {
+            reChildrenNode.push(childNodes[i])
+          }
         }
+        if (reChildrenNode.length > 1) {
+          const index = reChildrenNode.indexOf(node) + 1
+          name += ':nth-of-type(' + index + ')'
+        }
+        path = name + (path ? '>' + path : '')
+        node = parent
       }
-      if (reChildrenNode.length > 1) {
-        const index = reChildrenNode.indexOf(node) + 1
-        name += ':nth-of-type(' + index + ')'
-      }
-
-      path = name + (path ? '>' + path : '')
-      node = parent
     }
     return path
   }
 }
 
-var selectPluginText = `// eslint-disable-next-line no-unused-vars
-const {ipcRenderer} = require('electron')
-
+var selectPluginText = `const {ipcRenderer} = require('electron')
 let selectDom = null
 
 // eslint-disable-next-line no-unused-vars
@@ -117,24 +112,23 @@ var selectPlugin = {
     let path
     while (node) {
       let name = node.localName
-      if (!name) break
-      name = name.toLowerCase()
-      const parent = node.parentElement
-      let reChildrenNode = []
-
-      const childNodes = (parent && parent.childNodes) || []
-      for (let i = 0; i < childNodes.length; i++) {
-        if (childNodes[i].nodeName.toLowerCase() === name && !/\\s/.test(childNodes.nodeValue)) {
-          reChildrenNode.push(childNodes[i])
+      if (name) {
+        name = name.toLowerCase()
+        const parent = node.parentElement
+        let reChildrenNode = []
+        const childNodes = (parent && parent.childNodes) || []
+        for (let i = 0; i < childNodes.length; i++) {
+          if (childNodes[i].nodeName.toLowerCase() === name && !/\\s/.test(childNodes.nodeValue)) {
+            reChildrenNode.push(childNodes[i])
+          }
         }
+        if (reChildrenNode.length > 1) {
+          const index = reChildrenNode.indexOf(node) + 1
+          name += ':nth-of-type(' + index + ')'
+        }
+        path = name + (path ? '>' + path : '')
+        node = parent
       }
-      if (reChildrenNode.length > 1) {
-        const index = reChildrenNode.indexOf(node) + 1
-        name += ':nth-of-type(' + index + ')'
-      }
-
-      path = name + (path ? '>' + path : '')
-      node = parent
     }
     return path
   }

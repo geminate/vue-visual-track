@@ -36,7 +36,7 @@
       }
     },
     watch: {
-
+      // DOM 选取状态
       selecting () {
         let insert = ''
         if (this.selecting) {
