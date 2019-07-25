@@ -14,7 +14,7 @@
              class="webview"
              :src="webviewUrl"
              @dom-ready="onDomReady"
-             @did-navigate="onDidNavigate">
+             @did-navigate="onDidNavigate" @console-message="onConsoleMessage">
     </webview>
   </div>
 </template>
@@ -59,6 +59,10 @@
         this.canGoBack = this.$refs.webview.canGoBack()
         this.canGoForward = this.$refs.webview.canGoForward()
         console.log(url)
+      },
+
+      onConsoleMessage ({message}) {
+        console.log(message)
       },
 
       goForward () {

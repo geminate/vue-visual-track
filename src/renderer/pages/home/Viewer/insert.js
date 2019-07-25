@@ -5,6 +5,40 @@ var selectPlugin = {
     document.body.style.cursor = 'crosshair'
     this.addEvent(document.body, 'mouseover', this.mouseOverHandler)
     this.addEvent(document.body, 'mouseout', this.mouseOutHandler)
+  },
+
+  stopSelect: function () {
+    document.body.style.cursor = 'auto'
+    this.removeEvent(document.body, 'mouseover', this.mouseOverHandler)
+    this.removeEvent(document.body, 'mouseout', this.mouseOutHandler)
+  },
+
+  mouseOverHandler: function (e) {
+    e.stopPropagation()
+    e.target.style.backgroundColor = 'rgb(160,191,232)'
+    console.log(e.target)
+  },
+
+  mouseOutHandler: function (e) {
+    e.stopPropagation()
+    e.target.style.backgroundColor = ''
+  },
+
+  addEvent: function (element, eventName, handler) {
+    element.addEventListener(eventName, handler, false)
+  },
+
+  removeEvent: function (element, eventName, handler) {
+    element.removeEventListener(eventName, handler, false)
+  }
+}
+
+var selectPluginText = `var selectPlugin = {
+
+  startSelect: function () {
+    document.body.style.cursor = 'crosshair'
+    this.addEvent(document.body, 'mouseover', this.mouseOverHandler)
+    this.addEvent(document.body, 'mouseout', this.mouseOutHandler)
     this.addEvent(document.body, 'onkeypress', this.keyPressHandler)
   },
 
@@ -16,7 +50,8 @@ var selectPlugin = {
 
   mouseOverHandler: function (e) {
     e.stopPropagation()
-    e.target.style.backgroundColor = 'red'
+    e.target.style.backgroundColor = 'rgb(160,191,232)'
+    console.log(e.target)
   },
 
   mouseOutHandler: function (e) {
@@ -36,43 +71,6 @@ var selectPlugin = {
   removeEvent: function (element, eventName, handler) {
     element.removeEventListener(eventName, handler, false)
   }
-}
-
-var selectPluginText = `var selectPlugin = {
-
-  startSelect: function () {
-    document.body.style.cursor = 'crosshair'
-    this.addEvent(document.body, 'mouseover', this.mouseOverHandler)
-    this.addEvent(document.body, 'mouseout', this.mouseOutHandler)
-  },
-
-  stopSelect: function () {
-    document.body.style.cursor = 'auto'
-    this.removeEvent(document.body, 'mouseover', this.mouseOverHandler)
-    this.removeEvent(document.body, 'mouseout', this.mouseOutHandler)
-  },
-
-  mouseOverHandler: function (e) {
-    e.stopPropagation()
-    e.target.style.backgroundColor = 'red'
-  },
-
-  mouseOutHandler: function (e) {
-    e.stopPropagation()
-    e.target.style.backgroundColor = ''
-  },
-
-  mouseDownHandler: function (e) {
-    e.stopPropagation()
-  },
-
-  addEvent: function (element, eventName, handler) {
-    element.addEventListener(eventName, handler, false)
-  },
-
-  removeEvent: function (element, eventName, handler) {
-    element.removeEventListener(eventName, handler, false)
-  }
-}`
+};`
 
 export default selectPluginText
