@@ -14,7 +14,7 @@
     <webview ref="webview"
              nodeintegration
              class="webview"
-             src="http://localhost:8080/#/loan/CompanyLoan"
+             src="http://localhost:8081/#/"
              @dom-ready="onDomReady"
              @console-message="onConsoleMessage"
              @ipc-message="onIpcMessage"

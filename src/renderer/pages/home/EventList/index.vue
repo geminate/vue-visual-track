@@ -7,7 +7,7 @@
       <i class="fa fa-plus" @click="showModal"></i>
       <i class="fa fa-trash"></i>
       <i class="fa fa-pencil"></i>
-      <i class="fa fa-floppy-o right"></i>
+      <i class="fa fa-floppy-o right" @click="saveToFile"></i>
     </div>
 
     <!-- 事件列表 -->
@@ -55,6 +55,11 @@
       // 添加事件
       saveEvent (data) {
         this.eventList.push(data)
+      },
+
+      // 将列表保存为 JS 文件
+      saveToFile () {
+
       }
     }
   }
