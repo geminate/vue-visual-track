@@ -7,7 +7,7 @@
     <div class="page-container">
 
       <!-- Webview -->
-      <viewer @addEvent="addEvent"></viewer>
+      <viewer ref="webview" @addEvent="addEvent"></viewer>
 
       <!-- 中部按钮组 -->
       <btn-container></btn-container>
@@ -34,7 +34,6 @@
       addEvent (data) {
         this.$refs.eventList.showModal(data)
       }
-
     }
   }
 </script>

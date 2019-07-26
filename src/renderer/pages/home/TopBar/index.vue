@@ -25,7 +25,7 @@
 
       // webview 路由变化时需要同步修改输入框的值
       webviewUrl () {
-        this.url = this.webviewUrl
+        this.url = this.webviewUrl.url
       }
     },
     methods: {
@@ -34,11 +34,11 @@
       // 触发页面跳转
       goUrl () {
         this.$refs.urlInput.blur()
-        this.setWebviewUrl(this.url)
+        this.setWebviewUrl({url: this.url, change: true})
       }
     },
     mounted () {
-      this.url = this.webviewUrl
+      this.url = this.webviewUrl.url
     }
   }
 </script>
