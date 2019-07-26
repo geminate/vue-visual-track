@@ -19,7 +19,7 @@
 
       <el-form-item label="事件类型">
         <el-select v-model="form.type" placeholder="请选择">
-          <el-option label="点击" value="0"></el-option>
+          <el-option label="点击次数" value="0"></el-option>
         </el-select>
       </el-form-item>
 
@@ -27,7 +27,7 @@
 
     <div slot="footer" class="dialog-footer">
       <el-button @click="hideModal">取 消</el-button>
-      <el-button type="primary" @click="hideModal">确 定</el-button>
+      <el-button type="primary" @click="saveEvent">确 定</el-button>
     </div>
 
   </el-dialog>
@@ -40,14 +40,19 @@
       return {
         show: false,
         form: {
-          level: '1',
-          page: '',
-          selector: '',
-          type: '0'
+          level: '1', // 事件等级
+          page: '', // 页面地址
+          selector: '', // 选择器
+          type: '0' // 时间类型
         }
       }
     },
     methods: {
+
+      saveEvent () {
+        this.$emit('saveEvent', this.form)
+        this.hideModal()
+      },
 
       // 展示模态框
       showModal (data) {

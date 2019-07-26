@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    webviewUrl: {url: 'http://localhost:8080/#/loan/CompanyLoan', change: false}, // webview 当前URL
+    webviewUrl: {url: 'http://localhost:8080/#/loan/CompanyLoan', change: false}, // webview 当前URL / URL改变是否需要刷新webview
     selecting: false // 当前是否正在选择 DOM
   },
   getters: {},
