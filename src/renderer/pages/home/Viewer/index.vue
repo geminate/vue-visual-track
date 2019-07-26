@@ -19,25 +19,30 @@
              @console-message="onConsoleMessage"
              @ipc-message="onIpcMessage"
              @page-title-updated="onPageTitleUpdate"
+             @did-navigate-in-page="onDidNavigateInPage"
     >
     </webview>
   </div>
 </template>
 
 <script>
+  import {mapState, mapMutations} from 'vuex'
+  import URL from 'url'
   import insertJs from './insert'
   import electron from 'electron'
   import IPC from '@/../IPC.js'
 
   export default {
     name: 'Viewer',
-    props: ['webviewUrl', 'selecting'],
     data () {
       return {
         canGoBack: false,
         canGoForward: false,
         title: ''
       }
+    },
+    computed: {
+      ...mapState(['webviewUrl', 'selecting'])
     },
     watch: {
       // DOM 选取状态
@@ -52,16 +57,18 @@
       }
     },
     methods: {
+      ...mapMutations(['setWebviewUrl']),
 
       // 初始化
       init () {
         electron.ipcRenderer.on(IPC.PRESS_CTRL_Q, (e) => { // 主进程监控到按键按下后发送至渲染进程，渲染进程再发送到 webview 内
-          this.$refs.webview.executeJavaScript('selectPlugin.select()')
+          this.selecting && this.$refs.webview.executeJavaScript('selectPlugin.select()')
         })
       },
 
+      // webview 返回的消息
       onIpcMessage ({channel}) {
-        const url = this.$refs.webview.getURL()
+        const url = URL.parse(this.$refs.webview.getURL()).hash
         const obj = {
           level: '1',
           page: url,
@@ -73,18 +80,24 @@
       // Webview 加载完成回调
       onDomReady () {
         this.$refs.webview.executeJavaScript(insertJs)
-        const webContents = this.$refs.webview.getWebContents()
-        webContents.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1')
-        webContents.enableDeviceEmulation({
-          screenPosition: 'mobile',
-          screenSize: {width: 414, height: 736},
-          viewSize: {width: 414, height: 736}
-        })
+        // const webContents = this.$refs.webview.getWebContents()
+        // webContents.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1')
+        // webContents.enableDeviceEmulation({
+        //   screenPosition: 'mobile',
+        //   screenSize: {width: 414, height: 736},
+        //   viewSize: {width: 414, height: 736}
+        // })
       },
 
       // Webview 页面跳转完成回调
       onDidNavigate ({url}) {
-        this.$emit('webviewUrlChange', url)
+        this.setWebviewUrl(url)
+        this.canGoBack = this.$refs.webview.canGoBack()
+        this.canGoForward = this.$refs.webview.canGoForward()
+      },
+
+      onDidNavigateInPage ({url}) {
+        this.setWebviewUrl(url)
         this.canGoBack = this.$refs.webview.canGoBack()
         this.canGoForward = this.$refs.webview.canGoForward()
       },
@@ -94,6 +107,7 @@
         console.log(message)
       },
 
+      // 页面标题改变事件
       onPageTitleUpdate () {
         this.title = this.$refs.webview.getTitle()
       },

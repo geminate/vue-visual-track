@@ -1,17 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { createPersistedState, createSharedMutations } from 'vuex-electron'
-
-import modules from './modules'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules,
-  plugins: [
-    createPersistedState(),
-    createSharedMutations()
-  ],
-  strict: process.env.NODE_ENV !== 'production'
+  state: {
+    webviewUrl: 'http://localhost:8080/#/loan/CompanyLoan', // webview 当前URL
+    selecting: false // 当前是否正在选择 DOM
+  },
+  getters: {},
+  mutations: {
+
+    setWebviewUrl (state, webviewUrl) {
+      state.webviewUrl = webviewUrl
+    },
+
+    toggleSelecting (state) {
+      state.selecting = !state.selecting
+    }
+  }
 })

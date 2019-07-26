@@ -9,24 +9,36 @@
 </template>
 
 <script>
+  import {mapState, mapMutations} from 'vuex'
+
   export default {
     name: 'TopBar',
     data () {
       return {
-        url: 'https://github.com/' // 输入框中的地址
+        url: '' // 输入框中的地址
+      }
+    },
+    computed: {
+      ...mapState(['webviewUrl'])
+    },
+    watch: {
+
+      // webview 路由变化时需要同步修改输入框的值
+      webviewUrl () {
+        this.url = this.webviewUrl
       }
     },
     methods: {
+      ...mapMutations(['setWebviewUrl']),
 
       // 触发页面跳转
       goUrl () {
         this.$refs.urlInput.blur()
-        this.$emit('inputUrlChange', this.url)
-      },
-
-      changeUrl (url) {
-        this.url = url
+        this.setWebviewUrl(this.url)
       }
+    },
+    mounted () {
+      this.url = this.webviewUrl
     }
   }
 </script>

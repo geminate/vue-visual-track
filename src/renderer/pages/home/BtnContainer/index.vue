@@ -1,25 +1,20 @@
 <!-- 中部按钮组 -->
 <template>
   <div class="btn-container">
-    <i class="fa fa-mouse-pointer" :class="{active:selecting}" @click="toggleSelect"></i>
+    <i class="fa fa-mouse-pointer" :class="{active:selecting}" @click="toggleSelecting"></i>
   </div>
 </template>
 
 <script>
+  import {mapState, mapMutations} from 'vuex'
+
   export default {
     name: 'BtnContainer',
-    data () {
-      return {
-        selecting: false // 是否正在选取元素
-      }
+    computed: {
+      ...mapState(['selecting'])
     },
     methods: {
-
-      // 切换 Dom 选择
-      toggleSelect () {
-        this.selecting = !this.selecting
-        this.$emit('toggleSelect', this.selecting)
-      }
+      ...mapMutations(['toggleSelecting'])
     }
   }
 </script>

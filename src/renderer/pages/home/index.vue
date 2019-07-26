@@ -2,16 +2,15 @@
   <div class="home-page">
 
     <!-- 顶部地址输入框 -->
-    <top-bar ref="topBar" @inputUrlChange="inputUrlChange"></top-bar>
+    <top-bar ref="topBar"></top-bar>
 
     <div class="page-container">
 
       <!-- Webview -->
-      <viewer :webviewUrl="webviewUrl" @webviewUrlChange="webviewUrlChange" @addEvent="addEvent"
-              :selecting="selecting"></viewer>
+      <viewer @addEvent="addEvent"></viewer>
 
       <!-- 中部按钮组 -->
-      <btn-container @toggleSelect="toggleSelect"></btn-container>
+      <btn-container></btn-container>
 
       <!-- 右侧列表 -->
       <event-list ref="eventList"></event-list>
@@ -29,29 +28,9 @@
   export default {
     name: 'index',
     components: {TopBar, Viewer, BtnContainer, EventList},
-    data () {
-      return {
-        webviewUrl: 'https://github.com/', // webview 页面地址
-        selecting: false // 是否正在选取元素
-      }
-    },
     methods: {
 
-      // 输入框地址改变事件
-      inputUrlChange (webviewUrl) {
-        this.webviewUrl = webviewUrl
-      },
-
-      // webview 地址改变事件
-      webviewUrlChange (webviewUrl) {
-        this.$refs.topBar.changeUrl(webviewUrl)
-      },
-
-      // 切换 Dom 选择
-      toggleSelect (selecting) {
-        this.selecting = selecting
-      },
-
+      // 添加事件
       addEvent (data) {
         this.$refs.eventList.showModal(data)
       }
