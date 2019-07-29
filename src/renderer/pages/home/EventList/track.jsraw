@@ -1,0 +1,64 @@
+// 事件列表
+const jsonObj = JSON.parse(eventList)
+console.log(jsonObj)
+
+const oldEventList = []
+
+const onPageChange = function (hash) {
+  jsonObj.forEach(function (item) {
+    if (item.page === hash) {
+      oldEventList.forEach(function (oldEventItem) {
+        document.removeEventListener('click', oldEventItem)
+      })
+
+      item.events.forEach(function (eventItem) {
+        const handler = function (e) {
+          if (e.target.matches(eventItem.selector)) {
+            console.log(eventItem)
+          }
+        }
+        oldEventList.push(handler)
+
+        document.addEventListener('click', handler, false)
+      })
+    }
+  })
+}
+onPageChange(window.location.hash)
+
+// 监控页面跳转与后退
+const pushState = window.history.pushState
+window.history.pushState = function (obj, name, hash) {
+  if (typeof window.onPushstate === 'function') {
+    window.onPushstate(hash)
+  }
+  return pushState.apply(window.history, arguments)
+}
+
+const popState = window.history.popState
+window.history.popState = function (obj, name, hash) {
+  if (typeof window.onpopstate === 'function') {
+    window.onpopstate(hash)
+  }
+  return popState.apply(window.history, arguments)
+}
+
+const replaceState = window.history.replaceState
+window.history.replaceState = function (obj, name, hash) {
+  if (typeof window.onPushstate === 'function') {
+    window.onPushstate(hash)
+  }
+  return replaceState.apply(window.history, arguments)
+}
+
+function getFragment (url) {
+  return url.replace(/^[^#]*(#?.*)$/, '$1')
+}
+
+window.onPushstate = function (hash) {
+  onPageChange(getFragment(hash))
+}
+
+window.onpopstate = function () {
+  onPageChange(window.location.hash)
+}

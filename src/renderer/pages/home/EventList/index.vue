@@ -37,6 +37,7 @@
 <script>
   import EventModal from './EventModal'
   import {remote} from 'electron'
+  import trackJs from './track.jsraw'
   import fs from 'fs'
 
   export default {
@@ -59,11 +60,43 @@
         this.eventList.push(data)
       },
 
+      // 对数组按照页面进行分组
+      handleArray () {
+        const map = {}
+        const dest = []
+        for (let i = 0; i < this.eventList.length; i++) {
+          let ai = this.eventList[i]
+          if (!map[ai.page]) {
+            dest.push({
+              page: ai.page,
+              events: [ai]
+            })
+            map[ai.page] = ai
+          } else {
+            for (var j = 0; j < dest.length; j++) {
+              var dj = dest[j]
+              if (dj.page === ai.page) {
+                dj.events.push(ai)
+                break
+              }
+            }
+          }
+        }
+        return dest
+      },
+
+      // 创建文件字符串
+      createFileStr () {
+        const arr = this.handleArray(this.eventList)
+        const str = `const eventList = '${JSON.stringify(arr)}'`
+        return str + trackJs
+      },
+
       // 将列表保存为 JS 文件
       saveToFile () {
         const filePath = remote.dialog.showSaveDialog({title: '请选择保存位置', message: '请选择保存位置', defaultPath: 'track.js'})
         if (filePath) {
-          fs.writeFileSync(filePath, '123456', {encoding: 'UTF-8'})
+          fs.writeFileSync(filePath, this.createFileStr(), {encoding: 'UTF-8'})
         }
       }
     }
