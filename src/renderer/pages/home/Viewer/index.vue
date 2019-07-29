@@ -29,7 +29,8 @@
 <script>
   import {mapState, mapMutations} from 'vuex'
   import URL from 'url'
-  import insertJs from './insert'
+  import insertJs from './insert.jsraw'
+  // import insertJs from './insert'
   import electron from 'electron'
   import IPC from '@/../IPC.js'
 

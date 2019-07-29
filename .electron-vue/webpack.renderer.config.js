@@ -104,6 +104,9 @@ let rendererConfig = {
             name: 'fonts/[name]--[folder].[ext]'
           }
         }
+      }, {
+        test: /\.jsraw$/,
+        use: 'raw-loader'
       }
     ]
   },
