@@ -36,6 +36,8 @@
 
 <script>
   import EventModal from './EventModal'
+  import {remote} from 'electron'
+  import fs from 'fs'
 
   export default {
     name: 'Viewer',
@@ -59,7 +61,10 @@
 
       // 将列表保存为 JS 文件
       saveToFile () {
-
+        const filePath = remote.dialog.showSaveDialog({title: '请选择保存位置', message: '请选择保存位置', defaultPath: 'track.js'})
+        if (filePath) {
+          fs.writeFileSync(filePath, '123456', {encoding: 'UTF-8'})
+        }
       }
     }
   }
