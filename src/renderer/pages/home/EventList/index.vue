@@ -13,7 +13,9 @@
     <!-- 事件列表 -->
     <div class="event-container">
 
-      <div class="event-item" v-for="(item,i) in eventList">
+      <img v-if="eventList.length === 0" class="empty-img" src="@/assets/img/empty.jpg">
+
+      <div class="event-item" v-for="item in eventList">
         <div class="info-item">
           <label>事件级别：</label><span>区域级</span>
         </div>
@@ -73,8 +75,8 @@
             })
             map[ai.page] = ai
           } else {
-            for (var j = 0; j < dest.length; j++) {
-              var dj = dest[j]
+            for (let j = 0; j < dest.length; j++) {
+              let dj = dest[j]
               if (dj.page === ai.page) {
                 dj.events.push(ai)
                 break
