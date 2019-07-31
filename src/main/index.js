@@ -1,7 +1,11 @@
 import {app, BrowserWindow, Menu, globalShortcut} from 'electron'
 import IPC from '../IPC.js'
+import path from 'path'
 
 let mainWindow
+if (process.env.NODE_ENV !== 'development') {
+  global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\')
+}
 const winURL = process.env.NODE_ENV === 'development' ? `http://localhost:9080` : `file://${__dirname}/index.html`
 
 // 创建主窗体

@@ -1,9 +1,9 @@
 {
-  "name": "visual-tracking",
+  "name": "vue-visual-track",
   "version": "0.0.1",
   "author": "liuhuihao <1061036802@qq.com>",
-  "description": "An electron-vue project",
-  "license": null,
+  "description": "Vue 移动端项目可视化埋点探索",
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -19,7 +19,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "visual-tracking",
+    "productName": "vue-visual-track",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"
@@ -43,13 +43,13 @@
       ]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "static/icons/icon.icns"
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "static/icons/icon.ico"
     },
     "linux": {
-      "icon": "build/icons"
+      "icon": "static/icons"
     }
   },
   "dependencies": {
