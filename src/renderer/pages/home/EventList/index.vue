@@ -31,8 +31,8 @@
 
         <div class="event-btn-container">
           <div class="event-btn-context">
-            <i class="fa fa-pencil"></i>
-            <i class="fa fa-trash"></i>
+            <i class="fa fa-pencil" @click="editItem(item)"></i>
+            <i class="fa fa-trash" @click="removeItem(item)"></i>
           </div>
         </div>
       </div>
@@ -66,7 +66,16 @@
 
       // 添加事件
       saveEvent (data) {
-        this.eventList.push(data)
+        if (data && data.id !== '') {
+          this.eventList = this.eventList.map((item) => {
+            if (item.id === data.id) {
+              return data
+            }
+            return item
+          })
+        } else {
+          this.eventList.push({...data, id: this.$utils.getUUID()})
+        }
       },
 
       // 对数组按照页面进行分组
@@ -107,6 +116,15 @@
         if (filePath) {
           fs.writeFileSync(filePath, this.createFileStr(), {encoding: 'UTF-8'})
         }
+      },
+
+      editItem (item) {
+        this.showModal(item)
+      },
+
+      removeItem (item) {
+        const index = this.eventList.indexOf(item)
+        this.eventList.splice(index, 1)
       }
     }
   }

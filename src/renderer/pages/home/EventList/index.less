@@ -40,10 +40,6 @@
             border-bottom: 1px dashed #d3d9e2;
             display: flex;
 
-            &:hover {
-                background: #e8eef7;
-            }
-
             .info-container {
                 flex: 0 0 80%;
             }
@@ -61,12 +57,16 @@
                     text-align: right;
 
                     i {
-                        margin: 5px;
+                        padding: 10px;
                         text-align: center;
                         font-size: 20px;
                         color: #409EFF;
                         cursor: pointer;
                         position: relative;
+
+                        &:hover {
+                            background: #e8eef7;
+                        }
                     }
                 }
             }
