@@ -5,8 +5,6 @@
     <!-- 顶部按钮组 -->
     <div class="btn-container">
       <i class="fa fa-plus" @click="showModal"></i>
-      <i class="fa fa-trash"></i>
-      <i class="fa fa-pencil"></i>
       <i class="fa fa-floppy-o right" @click="saveToFile"></i>
     </div>
 
@@ -16,17 +14,26 @@
       <img v-if="eventList.length === 0" class="empty-img" src="@/assets/img/empty.jpg">
 
       <div class="event-item" v-for="item in eventList">
-        <div class="info-item">
-          <label>事件级别：</label><span>区域级</span>
+        <div class="info-container">
+          <div class="info-item">
+            <label>事件级别：</label><span>区域级</span>
+          </div>
+          <div class="info-item">
+            <label>页面地址：</label><span>{{item.page}}</span>
+          </div>
+          <div class="info-item">
+            <label>选择器：</label><span>{{item.selector}}</span>
+          </div>
+          <div class="info-item">
+            <label>事件类型：</label><span>1</span>
+          </div>
         </div>
-        <div class="info-item">
-          <label>页面地址：</label><span>{{item.page}}</span>
-        </div>
-        <div class="info-item">
-          <label>选择器：</label><span>{{item.selector}}</span>
-        </div>
-        <div class="info-item">
-          <label>事件类型：</label><span>1</span>
+
+        <div class="event-btn-container">
+          <div class="event-btn-context">
+            <i class="fa fa-pencil"></i>
+            <i class="fa fa-trash"></i>
+          </div>
         </div>
       </div>
     </div>

@@ -38,9 +38,37 @@
         .event-item {
             padding: 10px;
             border-bottom: 1px dashed #d3d9e2;
+            display: flex;
 
             &:hover {
                 background: #e8eef7;
+            }
+
+            .info-container {
+                flex: 0 0 80%;
+            }
+
+            .event-btn-container {
+                flex: 0 0 20%;
+                position: relative;
+
+                .event-btn-context {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 100%;
+                    text-align: right;
+
+                    i {
+                        margin: 5px;
+                        text-align: center;
+                        font-size: 20px;
+                        color: #409EFF;
+                        cursor: pointer;
+                        position: relative;
+                    }
+                }
             }
 
             .info-item {
