@@ -1,4 +1,4 @@
-# vue-visual-tracking
+# vue-visual-track
 
 > 针对 Vue 移动端项目的的可视化埋点探索。
 

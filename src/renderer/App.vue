@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'visual-tracking'
+    name: 'vue-visual-track'
   }
 </script>
 
