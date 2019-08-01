@@ -13,11 +13,14 @@ const onPageChange = function (hash) {
       item.events.forEach(function (eventItem) {
         const handler = function (e) {
           if (e.target.matches(eventItem.selector)) {
+
+            // TODO 可以在这里执行自定义的埋点事件
             console.log(eventItem)
           }
         }
         oldEventList.push(handler)
 
+        // TODO 可以在这里判断不同的事件类型，并根据不同的类型添加不同的事件
         document.addEventListener('click', handler, false)
       })
     }
