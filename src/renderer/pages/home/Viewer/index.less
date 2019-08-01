@@ -2,6 +2,7 @@
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
     box-sizing: content-box;
     flex: 0 0 414px;
+    position: relative;
 
     .header {
         height: 50px;
@@ -18,6 +19,12 @@
             overflow: hidden;
         }
 
+        .loading {
+            height: 49px;
+            position: absolute;
+            right: 20px;
+            top: 0;
+        }
 
         .back, .forward {
             position: absolute;
@@ -41,5 +48,13 @@
         width: 414px;
         height: 736px;
         display: inline-flex;
+    }
+
+    .img-404 {
+        position: absolute;
+        width: 220px;
+        top: 110px;
+        left: 50%;
+        transform: translate(-50%, 0);
     }
 }

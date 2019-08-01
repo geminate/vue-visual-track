@@ -1,6 +1,5 @@
 // 事件列表
 const jsonObj = JSON.parse(eventList)
-console.log(jsonObj)
 
 const oldEventList = []
 
@@ -26,7 +25,6 @@ const onPageChange = function (hash) {
 }
 onPageChange(window.location.hash)
 
-// 监控页面跳转与后退
 const pushState = window.history.pushState
 window.history.pushState = function (obj, name, hash) {
   if (typeof window.onPushstate === 'function') {

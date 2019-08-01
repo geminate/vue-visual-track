@@ -82,24 +82,18 @@
       handleArray () {
         const map = {}
         const dest = []
-        for (let i = 0; i < this.eventList.length; i++) {
-          let ai = this.eventList[i]
-          if (!map[ai.page]) {
-            dest.push({
-              page: ai.page,
-              events: [ai]
-            })
-            map[ai.page] = ai
+        this.eventList.forEach((item) => {
+          if (!map[item.page]) {
+            dest.push({page: item.page, events: [item]})
+            map[item.page] = item
           } else {
-            for (let j = 0; j < dest.length; j++) {
-              let dj = dest[j]
-              if (dj.page === ai.page) {
-                dj.events.push(ai)
-                break
+            dest.forEach((destItem) => {
+              if (destItem.page === item.page) {
+                destItem.events.push(item)
               }
-            }
+            })
           }
-        }
+        })
         return dest
       },
 
@@ -118,10 +112,12 @@
         }
       },
 
+      // 编辑事件
       editItem (item) {
         this.showModal(item)
       },
 
+      // 删除事件
       removeItem (item) {
         const index = this.eventList.indexOf(item)
         this.eventList.splice(index, 1)

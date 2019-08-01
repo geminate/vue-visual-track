@@ -5,6 +5,7 @@
     <!-- 浏览器标题栏 -->
     <div class="header">
       <div class="back" v-if="canGoBack" @click="goBack"><</div>
+      <img v-if="loading" class="loading" src="@/assets/img/loading.gif">
       <h1>{{title}}</h1>
       <div class="forward" v-if="canGoForward" @click="goForward">></div>
     </div>
@@ -19,9 +20,16 @@
              @console-message="onConsoleMessage"
              @ipc-message="onIpcMessage"
              @page-title-updated="onPageTitleUpdate"
+             @did-navigate="onDidNavigate"
              @did-navigate-in-page="onDidNavigateInPage"
+             @did-fail-load="onDidFailLoad"
+             @did-start-loading="onDidStartLoading"
+             @did-stop-loading="onDidStopLoading"
+             @load-commit="onLoadCommit"
     >
     </webview>
+
+    <img v-if="loadFail" class="img-404" src="@/assets/img/404.png"/>
 
   </div>
 </template>
@@ -30,7 +38,6 @@
   import {mapState, mapMutations} from 'vuex'
   import URL from 'url'
   import insertJs from './insert.jsraw'
-  // import insertJs from './insert'
   import electron from 'electron'
   import IPC from '@/../IPC.js'
 
@@ -40,7 +47,9 @@
       return {
         canGoBack: false,
         canGoForward: false,
-        title: ''
+        title: '',
+        loading: false,
+        loadFail: false // webview是否加载失败
       }
     },
     computed: {
@@ -88,6 +97,20 @@
         this.$refs.webview.executeJavaScript(insertJs)
       },
 
+      onDidStartLoading () {
+        this.loading = true
+      },
+
+      onDidStopLoading () {
+        this.loading = false
+      },
+
+      onDidNavigate ({url}) {
+        this.setWebviewUrl({url, change: false})
+        this.canGoBack = this.$refs.webview.canGoBack()
+        this.canGoForward = this.$refs.webview.canGoForward()
+      },
+
       onDidNavigateInPage ({url}) {
         this.setWebviewUrl({url, change: false})
         this.canGoBack = this.$refs.webview.canGoBack()
@@ -102,6 +125,16 @@
       // 页面标题改变事件
       onPageTitleUpdate () {
         this.title = this.$refs.webview.getTitle()
+      },
+
+      // 页面加载失败事件
+      onDidFailLoad () {
+        this.loadFail = true
+        this.title = this.webviewUrl.url
+      },
+
+      onLoadCommit () {
+        this.loadFail = false
       },
 
       // Webview 前进
